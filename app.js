@@ -23,13 +23,24 @@ client.connect((err) => {
   } else {
     console.log("Database connected...");
   }
-  const volunteerCollection = client
-    .db("volunteerNetwork")
-    .collection("volunteers");
+});
 
-  // Routes
-  app.get("/", (req, res) => {
-    res.send("Volunteer Network API");
+const eventsCollection = client.db("volunteers").collection("events");
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Volunteer Network API");
+});
+
+app.post("/events", (req, res) => {
+  const event = req.body;
+  const { name, description, date, location, volunteers } = event;
+  eventsCollection.insertOne(event, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.send(result);
+    }
   });
 });
 
