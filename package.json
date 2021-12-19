@@ -6,6 +6,10 @@
   "repository": "https://github.com/MinhajSadik/Volunteer-Network-Server.git",
   "author": "MinhajSadik <MinhajoSadik@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
   "devDependencies": {
     "nodemon": "^2.0.15"
   },
