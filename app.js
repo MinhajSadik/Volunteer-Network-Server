@@ -44,6 +44,17 @@ app.post("/events", (req, res) => {
   });
 });
 
+app.get("/allEvents", (req, res) => {
+  eventsCollection.find({}).toArray((err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.status(200).send(result);
+      console.log("result", result);
+    }
+  });
+});
+
 app.listen(process.env.PORT || PORT, () => {
   console.log(`Server running on ${PORT}`);
 });
