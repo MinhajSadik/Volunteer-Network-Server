@@ -32,25 +32,14 @@ app.get("/", (req, res) => {
   res.send("Volunteer Network API");
 });
 
-app.post("/events", (req, res) => {
-  const event = req.body;
-  const { name, description, date, location, volunteers } = event;
-  eventsCollection.insertOne(event, (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-app.get("/allEvents", (req, res) => {
-  eventsCollection.find({}).toArray((err, result) => {
+app.post("/addEvent", (req, res) => {
+  const newEvent = req.body;
+  eventsCollection.insertOne(newEvent, (err, result) => {
     if (err) {
       console.error(err);
     } else {
       res.status(200).send(result);
-      console.log("result", result);
+      console.log("result", result.insertedId);
     }
   });
 });
