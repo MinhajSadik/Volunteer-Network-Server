@@ -1,6 +1,7 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
   MongoClient = require("mongodb").MongoClient,
+  ObjectID = require("mongodb").ObjectID,
   dotenv = require("dotenv").config(),
   cors = require("cors"),
   PORT = process.env.PORT || 3001,
@@ -45,12 +46,24 @@ app.post("/addEvent", (req, res) => {
 });
 
 app.get("/events", (req, res) => {
-  eventsCollection.find({}).toArray((err = null, event = []) => {
+  eventsCollection.find({}).toArray((err, event) => {
     if (err) {
       console.error(err);
     } else {
       res.status(200).send(event);
       console.log("event:", event);
+    }
+  });
+});
+
+app.delete("/deleteEvent/:id", (req, res) => {
+  const id = ObjectID(req.body.id);
+  eventsCollection.findOneAndDelete({ _id: id }, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.status(200).send(result);
+      console.log("deleted event:", result);
     }
   });
 });
