@@ -57,7 +57,7 @@ app.get("/events", (req, res) => {
 });
 
 app.delete("/deleteEvent/:id", (req, res) => {
-  const id = ObjectID(req.body.id);
+  const id = ObjectID(req.params.id);
   eventsCollection.findOneAndDelete({ _id: id }, (err, result) => {
     if (err) {
       console.error(err);
